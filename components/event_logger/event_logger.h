@@ -1,7 +1,6 @@
 #include "esphome/core/component.h"
 #include "esphome/core/log.h"
 #include "esphome/components/time/real_time_clock.h"
-#include "esphome/components/time/time_component.h"
 #include <vector>
 #include <string>
 
