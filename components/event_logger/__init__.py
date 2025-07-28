@@ -4,6 +4,8 @@ from esphome.const import CONF_ID
 
 # Importa i tipi necessari dal componente time di ESPHome
 import esphome.components.time as time
+# NUOVO IMPORTO: Per registrare le azioni (servizi)
+import esphome.core.automation as automation 
 
 # Definisce il namespace C++ e la classe per il nostro componente
 event_logger_ns = cg.esphome_ns.namespace("event_logger")
@@ -32,8 +34,6 @@ async def to_code(config):
     cg.add(var.set_time_component(time_component))
 
     # --- Definizione del servizio per add_entry_with_timestamp ---
-    # Questo servizio sarà chiamabile come un'azione 'event_logger.add_timestamped_entry'
-    # dalla tua configurazione YAML.
     cg.add_global(event_logger_ns.using) # Necessario per usare i tipi del namespace event_logger in C++
 
     ADD_TIMESTAMPED_ENTRY_SCHEMA = cv.Schema(
@@ -42,11 +42,9 @@ async def to_code(config):
             cv.Required("message"): cv.string, # La stringa del messaggio da aggiungere
         }
     )
-    # Registra il servizio
-    cg.register_action(
+    # MODIFICA QUI: Usa automation.register_action
+    automation.register_action(
         "event_logger.add_timestamped_entry",
         ADD_TIMESTAMPED_ENTRY_SCHEMA,
-        # La funzione C++ da chiamare: add_entry_with_timestamp sull'istanza 'var'
-        # Passa solo il messaggio, il timestamp viene preso internamente dalla classe.
         lambda config: var.add_entry_with_timestamp(config["message"])
     )
