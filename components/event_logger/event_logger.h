@@ -1,6 +1,6 @@
 #include "esphome/core/component.h"
 #include "esphome/core/log.h"
-#include "esphome/components/time/real_time_clock.h"
+#include "esphome/components/time/real_time_clock.h" // Questo include le definizioni necessarie per il componente time
 #include <vector>
 #include <string>
 
@@ -36,7 +36,9 @@ class EventLogger : public Component {
       return;
     }
 
-    time::ESPTime now = this->time_component_->now(); // Ottiene l'ora corrente dal componente time
+    // Qui la correzione chiave: usa esphome::ESPTime direttamente
+    esphome::ESPTime now = this->time_component_->now(); // Ottiene l'ora corrente dal componente time
+
     if (!now.is_valid()) {
       add_entry("Timestamp non valido - " + message);
       return;
