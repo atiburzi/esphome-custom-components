@@ -57,7 +57,6 @@ class EventLogger : public Component {
   const char* TAG = "EventLogger";
   std::vector<std::string> log_entries_; // Mantenuta privata/protetta
   size_t max_entries_ = 10;
-  time::RealTimeClock *time_component_{nullptr}; // Puntatore al componente time
 };
 
 } // namespace event_logger
