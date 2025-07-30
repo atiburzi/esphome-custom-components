@@ -58,8 +58,9 @@ class EventLogger : public Component {
 
   // Restituisce una specifica voce del log per indice
   const std::string& get_entry(size_t index) const {
-    if (index < log_entries_.size()) {
-      return log_entries_[index];
+    size_t actual_index = log_entries_.size() - 1 - index;
+    if (actual_index < log_entries_.size()) { 
+      return log_entries_[actual_index];
     }
     static const std::string EMPTY_STRING = "";
     ESP_LOGE(TAG, "Attempted to access out-of-bounds log entry at index %zu", index);
