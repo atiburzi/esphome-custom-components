@@ -302,11 +302,8 @@ bool DisplayMenuComponent::leave_menu_() {
     this->selection_stack_.pop_front();
     this->displayed_item_->on_enter();
     changed = true;
-  } else {
-    this->hide(); 
-    changed = true;
-  }   
-  
+  }
+
   return changed;
 }
 
